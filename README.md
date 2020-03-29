@@ -1,3 +1,9 @@
+python 的版本不能是3.6.0
+需要安装3.6.8
+
+
+
+
 # Pytorch Graph Attention Network
 
 This is a pytorch implementation of the Graph Attention Network (GAT)

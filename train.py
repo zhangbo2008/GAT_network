@@ -18,7 +18,7 @@ from models import GAT, SpGAT
 
 # Training settings
 parser = argparse.ArgumentParser()
-parser.add_argument('--no-cuda', action='store_true', default=False, help='Disables CUDA training.')
+parser.add_argument('--no-cuda', action='store_true', default=True, help='Disables CUDA training.')
 parser.add_argument('--fastmode', action='store_true', default=False, help='Validate during training pass.')
 parser.add_argument('--sparse', action='store_true', default=False, help='GAT with sparse version or not.')
 parser.add_argument('--seed', type=int, default=72, help='Random seed.')
@@ -32,6 +32,7 @@ parser.add_argument('--alpha', type=float, default=0.2, help='Alpha for the leak
 parser.add_argument('--patience', type=int, default=100, help='Patience')
 
 args = parser.parse_args()
+print(args,"参数表")
 args.cuda = not args.no_cuda and torch.cuda.is_available()
 
 random.seed(args.seed)
@@ -79,7 +80,7 @@ def train(epoch):
     model.train()
     optimizer.zero_grad()
     output = model(features, adj)
-    loss_train = F.nll_loss(output[idx_train], labels[idx_train])
+    loss_train = F.nll_loss(output[idx_train], labels[idx_train]) #The negative log likelihood loss.  就是极大似然-log 顺势函数
     acc_train = accuracy(output[idx_train], labels[idx_train])
     loss_train.backward()
     optimizer.step()
